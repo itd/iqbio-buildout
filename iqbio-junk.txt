@@ -1,0 +1,98 @@
+git@github.com:itd/iqbio.pasurvey.git
+
+#    dexterity.write_permission(track='example.conference.ModifyTrack')
+#    picture = NamedImage(
+#            title=_(u"Picture"),
+#            description=_(u"(optional) If you wish to include a photo, please add it here."),
+#            required=False,
+#        )
+
+#
+
+    import transaction
+
+    # Set up groups
+    uf = getToolByName(site, 'acl_users')
+    gtool = getToolByName(site, 'portal_groups')
+    if not uf.searchGroups(id='FacultyReviewers'):
+        gtool.addGroup('FacultyReviewers', title='FacultyReviewers', roles=['Editor'])
+    if not uf.searchGroups(id='SurveryManagers'):
+        gtool.addGroup('SurveryManagers', title='SurveryManagers', roles=['Manager'])
+    if not uf.searchGroups(id='ProgramReviewers'):
+        gtool.addGroup('ProgramReviewers', title='ProgramReviewers', roles=['Editor'])
+    transaction.commit()
+
+
+######
+Oct 25 8:18 am commit pull
+From github.com:itd/iqbio.pasurvey
+ * branch            master     -> FETCH_HEAD
+Updating e50a652..4194a50
+Fast-forward
+ iqbio/pasurvey/pasurvey.py                         |    2 +-
+ iqbio/pasurvey/profiles/default/types.xml          |    4 ++--
+ .../{pasurvey.xml => iqbio.pasurvey.pasurvey.xml}  |    4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+ rename iqbio/pasurvey/profiles/default/types/{pasurvey.xml => iqbio.pasurvey.pasurvey.xml} (93%)
+
+
+
+
+  <!-- declaration of the steps -->
+  <!--
+  <genericsetup:importStep
+      name="policydefault"
+      title:profile-iqbio.pasurvey: Various steps"
+      description="Setup handlers for iqbio.pasurvey"
+      handler="iqbio.pasurvey.setuphandlers.importVarious">
+  </genericsetup:importStep>
+
+  <!-- upgrade steps -->
+  <!--
+  <genericsetup:upgradeSteps
+      sortkey="10"
+      source="*"
+      destination="*"
+      profile="iqbio.pasurvey:default">
+    <genericsetup:upgradeStep
+        title="Update Catalog"
+        description="You'll never see me..."
+        handler="iqbio.pasurvey.upgrades.updateCatalog"
+        />
+    <genericsetup:upgradeStep
+        title="Constrain allowable types in events folder"
+        description="You'll never see this part, but you'll see the result..."
+        handler="iqbio.pasurvey.upgrades.setSurveysFolderContentRestrictions"
+        />
+  </genericsetup:upgradeSteps>
+
+-->
+
+
+
+    def updateWidgets(self):
+        """ Customize widget options before rendering the form. """
+
+        self.widgets["fname"].addClass("testwidgetclass")
+
+
+IQ Biology Survey and Supplementary Information Form
+
+
+//*[@id="fieldset-4"]
+
+#fieldset-0.kssattr-fieldset-0.formPanel,
+#fieldset-1.kssattr-fieldset-1.formPanel,
+#fieldset-2.kssattr-fieldset-2.formPanel,
+#fieldset-3.kssattr-fieldset-3.formPanel,
+#fieldset-4.kssattr-fieldset-4.formPanel
+{
+    border: 1px solid red;
+}
+
+fieldset legend {
+    border: 1px solid red;
+}
+
+
+
