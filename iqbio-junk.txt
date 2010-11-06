@@ -94,5 +94,163 @@ fieldset legend {
     border: 1px solid red;
 }
 
+KurtB:
+I'm building a z3c form that rips a dexterity type, and I need to stick a chunk of descriptive text in the middle of the form. What's the right way to do this?
+[2:40pm] kojiro left the chat room. (Quit: bbl)
+[2:41pm] JaRoel|4D joined the chat room.
+[2:41pm] KurtB:
+I was thinking I cram in a dummy field. But, I'm sure there's a better way.
+[2:41pm] davisagli:
+KurtB: you don't need to use the default form template. you can just write a custom one that makes the call to render each field manually, and then put whatever you want in between
+[2:42pm] ErKa joined the chat room.
+[2:42pm] markvl joined the chat room.
+[2:42pm] miziodel joined the chat room.
+[2:43pm] KurtB:
+davisagli: Yeah. I'm lazy and was hoping there was another way for this one chunk of text.
+[2:43pm] KurtB:
+The form has like 70 fields.
+[2:44pm] davisagli:
+KurtB: well, you could just loop over the fields like the default template does, but add a conditional to insert something extra if the field name matches something
+
+
+We are using the default template to generate the form. But the client wants to drop a paragraph of text into the middle of the form.
+
+I was told "you don't need to use the default form template. you can just write a custom one that makes the call to render each field manually, and then put whatever you want in between"
+
+But no one can show me any example code, and I've been pointed to this URL:
+http://plone.org/products/dexterity/documentation/manual/developer-manual/advanced/forms
+
+        <ol>
+           <li tal:condition="isAnon">
+               <a tal:attributes="href string:$object_url/@@register">REGISTER FOR AN ACCOUNT</a>
+               using your email as a login.
+           </li>
+           <li tal:condition="isAnon">
+               <a tal:attributes="href string:$object_url/login_form">LOG IN</a>
+               to the IQ Biology Survey and Supplementary Information site.
+           </li>
+           <li tal:define="survey view/getSurvey;
+                           url python: view.getSurveyUrl(survey)">
+               <a tal:attributes="href url"><span tal:replace="python: survey and 'Edit' or 'Create'" /> your
+               IQBiology Survey</a>.
+               Please create only one survey.
+           </li>
+           <li>
+               Link to <a href="https://soaprod.cusys.edu/degreeprog/applyDEGREEPROG_CUBLD/login.action">CU's
+               Graduate School Application Website</a>
+               to fill out your application to CU.
+           </li>
+           <li>Access your survey to make edits and complete the necessary supplementary information.
+           You will need to formally submit this survey plus supplementary information before the
+           deadline of January, 5th 2011.</li>
+        </ol>
+
+<p>
+After answering the above questions, please press "Save as Draft". You will then be directed to
+the Graduate School Application Website to fill out your application for your "First Degree Program of Interest".
+Remember to return to the IQ Biology Survey and Supplementary Information site to edit information on
+your survey and provide the necessary supplementary information for your Degree Programs of Interest.
+The following Degree Programs require Supplementary Information: Biochemistry, Chemical &amp;
+Biological Engineering, Computer Science, Ecology &amp; Evolutionary Biology, and Chemical Physics.
+The other degree programs do not require any Supplementary Information (Applied Mathematics,
+Mechanical Engineering, and Molecular, Cellular & Developmental Biology). You will only be
+able to view the questions for the Supplementary Information after you have saved your
+draft initially and return to your survey for editing.
+</p>
+<p>
+ You must submit the IQ Biology Survey with Supplementary Information and the Graduate
+ School Application by January 5th, 2011.
+</p>
+
+
+
+
+
+##############################################
+front-page html content
+##############################################
+
+<h3>Welcome to the IQ Biology Survey and Supplementary Information Site</h3>
+<p style="padding-left: 0px; ">We recommend you bookmark this page so that you may access your application easily<br />in the future. From this site, you are able to:</p>
+<ol style="padding-left: 0px; list-style-type: decimal; ">
+<li style="padding-left: 0px; "><a class="external-link" href="@@register" style="padding-left: 0px; ">REGISTER FOR AN ACCOUNT</a> using your email as a login.</li>
+<li style="padding-left: 0px; "><a class="external-link" href="login_form" style="padding-left: 0px; ">LOG IN</a> to the <span class="external-link">IQ Biology Survey and Supplementary Information</span> site.</li>
+<li style="padding-left: 0px; "> <a class="internal-link" href="surveys" style="padding-left: 0px; ">Create your IQBiology Survey</a>. Please create only one survey.</li>
+<li style="padding-left: 0px; ">Link to <a class="external-link" href="https://soaprod.cusys.edu/degreeprog/applyDEGREEPROG_CUBLD/login.action">CU's Graduate School Application Website</a> to fill out your application to CU.</li>
+<li style="padding-left: 0px; "><a class="internal-link" href="surveys">Access  your survey to make edits</a> and complete the necessary supplementary  information. You will need to formally submit this survey plus  supplementary information before the deadline of January, 5th 2011.</li>
+</ol>
+<p>If you have not already, we strongly encourage you to print out the <a class="external-link" href="http://iqbiology.colorado.edu/application/instructions"> Application Instructions</a> before you begin this process.<br />Questions about the application process can be sent to <a class="mail-link" href="mailto:IQBiology@colorado.edu?subject=IQ Biology Survey Question">IQBiology@colorado.edu</a></p>
+############################################
+
+
+
+
+
+ToDo....
+==========================================
+Validators needs to check for a value greaterthan 1 char
+
+ALWAYS_REQUIRED_FIELDS = ('fname', 'alsoapply',
+    'lname', 'email','dob',
+    'degreeprogram1', 'degreeprogram2',)
+
+degreeprogram1', 'degreeprogram2' need told
+have a value set.
+
+
+Consideration by individual degree program(s)?
+
+
+???? Make all supplimentary questions mandatory.
+
+
+Add supplimentary and "Degree Program"
+Supplimentary Chemical and Biological Engineering Degree Program
+
+
+After "Submit for review... needs
+
+1. to change the outgoing email
+2. to go to a new page.
+
+
+Right now, this is the email i get after saving a draft. I would rather we have the
+set up where it sends you the link to the home page (which can link to the surveys,
+and then a further link to the edits). Depending on how we can get that worked out,
+i would also like to add some further text. Something like:
+
+ [title] Thank you for saving your IQ Biology Survey and Supplementary Information.
+[text]
+If you have not done so already, please continue to the Graduate School Application
+Website [link: https://soaprod.cusys.edu/degreeprog/applyDEGREEPROG_CUBLD/login.action]
+to fill out your application for your “First Department of Interest”.
+Remember to return to the IQ Biology Survey and Supplementary Information site to
+edit information on your survey and provide the necessary supplementary information
+for your Degree Programs of Interest before the deadline.
+You may use this link to return back to the IQ Biology Survey site to enter in
+your Supplementary Information and edit any of your information as needed.
+PUT IN LINK HERE
+After you have completed your IQ Biology Survey and Supplementary Information,
+press the “Submit Survey” button. After you do that, your information will be
+delivered to IQ Biology and will no longer be available for edit.
+Please review the Application Instructions
+[link http://iqbiology.colorado.edu/application/instructions] to be
+sure that your entire application is complete by the deadline on January 5th, 2011.
+
+Please Contact Us [link http://iqbiology.colorado.edu/contact-us ] if you
+have any questions.
+
+Thank you,
+The IQ Biology Program
+IQBiology.colorado.edu
+
+
+
+
+
+
+
+        <h1 tal:define="survey view/getSurvey"
+                tal:condition="not: survey">There was a value in survey</h1>
 
 
