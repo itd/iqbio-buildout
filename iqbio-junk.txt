@@ -254,3 +254,21 @@ IQBiology.colorado.edu
                 tal:condition="not: survey">There was a value in survey</h1>
 
 
+##########################
+
+from Acquisition import aq_inner
+from Products.CMFCore.utils import getToolByName
+from zope.component import getMultiAdapter
+
+context = aq_inner(self)
+mt = getToolByName(context, 'portal_membership')
+memb = mt.getAuthenticatedMember()
+memb.getId()
+
+
+
+
+
+
+
+
